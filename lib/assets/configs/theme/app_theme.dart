@@ -4,7 +4,7 @@ import 'package:flutter/material.dart';
 class AppTheme {
   static final darkTheme = ThemeData(
     primaryColor: AppColors.primary,
-    scaffoldBackgroundColor: AppColors.lightBackground,
+    scaffoldBackgroundColor: AppColors.layoutBackground,
     brightness: Brightness.dark,
     fontFamily: 'ppneuemontreal',
     elevatedButtonTheme: ElevatedButtonThemeData(

@@ -1,19 +1,22 @@
+import 'package:bia_app/presentation/energy_rating/screens/energy_rating_screen.dart';
 import 'package:flutter/material.dart';
 import 'assets/configs/theme/app_theme.dart';
 
 void main() {
-  runApp(const MyApp());
+  runApp(MyApp());
 }
 
 class MyApp extends StatelessWidget {
-  const MyApp({super.key});
+  final key = GlobalKey();
+  MyApp({super.key});
 
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
+      debugShowCheckedModeBanner: false,
       title: 'BIA App',
       theme: AppTheme.darkTheme,
-      home: Container(),
+      home: const EnergyRatingScreen(),
     );
   }
 }
