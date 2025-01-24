@@ -14,7 +14,7 @@ class EnergyRatingScreen extends StatefulWidget {
 }
 
 class _EnergyRatingScreenState extends State<EnergyRatingScreen> {
-  double _sliderValue = 4.0;  // Initialize with middle value
+  double _sliderValue = 4.0; // Initialize with middle value
 
   @override
   Widget build(BuildContext context) {
@@ -87,7 +87,7 @@ class _EnergyRatingScreenState extends State<EnergyRatingScreen> {
                           padding: const EdgeInsets.symmetric(horizontal: 24),
                           child: Column(
                             children: [
-                                CustomSlider(
+                              CustomSlider(
                                 value: _sliderValue,
                                 onChanged: (value) {
                                   setState(() {

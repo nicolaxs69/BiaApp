@@ -9,35 +9,29 @@ class CustomSlider extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Padding(
-      padding: const EdgeInsets.symmetric(horizontal: 16.0),
-      child: SizedBox(
-        width: MediaQuery.of(context).size.width * 0.9,
-        child: SliderTheme(
-          data: SliderThemeData(
-            trackHeight: 24,
-            trackShape: CustomTrackShape(trackExtension: 12),
-            thumbShape: const RoundSliderThumbShape(enabledThumbRadius: 32),
-            overlayShape: const RoundSliderOverlayShape(overlayRadius: 30),
-            tickMarkShape: const CustomTickMarkShape(
-              tickRadius: 2.0,
-              horizontalPadding: 0,
-              endPadding: 0,
-            ),
-            activeTickMarkColor: Colors.white.withOpacity(0.5),
-            inactiveTickMarkColor: Colors.white.withOpacity(1),
-            activeTrackColor: Colors.grey.withOpacity(1.0),
-            inactiveTrackColor: Colors.grey.withOpacity(0.5),
-            thumbColor: AppColors.sliderThumb,
-            overlayColor: Colors.white.withOpacity(0.2),
-          ),
-          child: Slider(
-            max: 7.0,
-            value: value,
-            divisions: 6,
-            onChanged: onChanged,
-          ),
+    return SliderTheme(
+      data: SliderThemeData(
+        trackHeight: 22,
+        trackShape: CustomTrackShape(),
+        thumbShape: const RoundSliderThumbShape(enabledThumbRadius: 20),
+        overlayShape: const RoundSliderOverlayShape(overlayRadius: 30),
+        tickMarkShape: const CustomTickMarkShape(
+          tickRadius: 2.0,
+          horizontalPadding: 0,
+          endPadding: 0,
         ),
+        activeTickMarkColor: Colors.white.withOpacity(0.5),
+        inactiveTickMarkColor: Colors.white.withOpacity(1),
+        activeTrackColor: Colors.grey.withOpacity(1.0),
+        inactiveTrackColor: Colors.grey.withOpacity(0.5),
+        thumbColor: AppColors.sliderThumb,
+        overlayColor: Colors.white.withOpacity(0.2),
+      ),
+      child: Slider(
+        max: 7.0,
+        value: value,
+        divisions: 6,
+        onChanged: onChanged,
       ),
     );
   }
