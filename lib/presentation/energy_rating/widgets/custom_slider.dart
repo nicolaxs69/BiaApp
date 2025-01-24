@@ -15,7 +15,8 @@ class CustomSlider extends StatelessWidget {
         width: MediaQuery.of(context).size.width * 0.9,
         child: SliderTheme(
           data: SliderThemeData(
-            trackHeight: 22,
+            trackHeight: 24,
+            trackShape: CustomTrackShape(trackExtension: 12),
             thumbShape: const RoundSliderThumbShape(enabledThumbRadius: 32),
             overlayShape: const RoundSliderOverlayShape(overlayRadius: 30),
             tickMarkShape: const CustomTickMarkShape(
@@ -42,6 +43,7 @@ class CustomSlider extends StatelessWidget {
   }
 }
 
+// Custom tick to modify the tick mark size and color
 class CustomTickMarkShape extends RoundSliderTickMarkShape {
   final double tickRadius;
   final double horizontalPadding;
@@ -84,5 +86,70 @@ class CustomTickMarkShape extends RoundSliderTickMarkShape {
     final double clampedX = center.dx.clamp(leftLimit, rightLimit);
     final Offset shiftedCenter = Offset(clampedX, center.dy);
     context.canvas.drawCircle(shiftedCenter, tickRadius, paint);
+  }
+}
+
+// Custom track shape to extend the track to the edge of the screen
+class CustomTrackShape extends RoundedRectSliderTrackShape {
+  final double trackExtension;
+
+  CustomTrackShape({this.trackExtension = 0.0});
+
+  @override
+  Rect getPreferredRect({
+    required RenderBox parentBox,
+    Offset offset = Offset.zero,
+    required SliderThemeData sliderTheme,
+    bool isEnabled = false,
+    bool isDiscrete = false,
+  }) {
+    final double trackHeight = sliderTheme.trackHeight ?? 0.0;
+    final double trackLeft = offset.dx - trackExtension;
+    final double trackTop =
+        offset.dy + (parentBox.size.height - trackHeight) / 2;
+    final double trackWidth = parentBox.size.width + (trackExtension * 2);
+    return Rect.fromLTWH(trackLeft, trackTop, trackWidth, trackHeight);
+  }
+
+  @override
+  void paint(
+    PaintingContext context,
+    Offset offset, {
+    required RenderBox parentBox,
+    required SliderThemeData sliderTheme,
+    required Animation<double> enableAnimation,
+    required TextDirection textDirection,
+    required Offset thumbCenter,
+    Offset? secondaryOffset,
+    bool isDiscrete = false,
+    bool isEnabled = false,
+    double? additionalActiveTrackHeight,
+  }) {
+    final Rect trackRect = getPreferredRect(
+      parentBox: parentBox,
+      offset: offset,
+      sliderTheme: sliderTheme,
+      isEnabled: isEnabled,
+      isDiscrete: isDiscrete,
+    );
+
+    final double trackLeft = trackRect.left + trackExtension;
+    final double trackRight = trackRect.right - trackExtension;
+    final double trackWidth = trackRight - trackLeft;
+
+    final double trackValue = (thumbCenter.dx - trackLeft) / trackWidth;
+    final double adjustedThumbCenter = trackLeft + trackWidth * trackValue;
+
+    super.paint(
+      context,
+      offset,
+      parentBox: parentBox,
+      sliderTheme: sliderTheme,
+      enableAnimation: enableAnimation,
+      textDirection: textDirection,
+      thumbCenter: Offset(adjustedThumbCenter, thumbCenter.dy),
+      isDiscrete: isDiscrete,
+      isEnabled: isEnabled,
+    );
   }
 }
