@@ -13,7 +13,11 @@ class CustomSlider extends StatelessWidget {
       data: SliderThemeData(
         trackHeight: 22,
         trackShape: CustomTrackShape(),
-        thumbShape: const RoundSliderThumbShape(enabledThumbRadius: 20),
+        thumbShape: const CustomThumbShape(
+          Colors.white,
+          thumbRadius: 22,
+          active: false,
+        ),
         overlayShape: const RoundSliderOverlayShape(overlayRadius: 30),
         tickMarkShape: const CustomTickMarkShape(
           tickRadius: 2.0,
@@ -24,7 +28,6 @@ class CustomSlider extends StatelessWidget {
         inactiveTickMarkColor: Colors.white.withOpacity(1),
         activeTrackColor: Colors.grey.withOpacity(1.0),
         inactiveTrackColor: Colors.grey.withOpacity(0.5),
-        thumbColor: AppColors.sliderThumb,
         overlayColor: Colors.white.withOpacity(0.2),
       ),
       child: Slider(
@@ -145,5 +148,57 @@ class CustomTrackShape extends RoundedRectSliderTrackShape {
       isDiscrete: isDiscrete,
       isEnabled: isEnabled,
     );
+  }
+}
+
+class CustomThumbShape extends SliderComponentShape {
+  final Color activeColor;
+  final bool active;
+  final double thumbRadius;
+
+  const CustomThumbShape(this.activeColor, {required this.thumbRadius, required this.active});
+
+  @override
+  Size getPreferredSize(bool isEnabled, bool isDiscrete) {
+    return Size.fromRadius(thumbRadius);
+  }
+
+  @override
+  void paint(
+    PaintingContext context,
+    Offset center, {
+    required Animation<double> activationAnimation,
+    required Animation<double> enableAnimation,
+    required bool isDiscrete,
+    required TextPainter labelPainter,
+    required RenderBox parentBox,
+    required SliderThemeData sliderTheme,
+    required TextDirection textDirection,
+    required double value,
+    required double textScaleFactor,
+    required Size sizeWithOverflow,
+  }) {
+ 
+    context.canvas.drawCircle(
+      center,
+      thumbRadius,
+      Paint()
+        ..color = activeColor
+        ..style = PaintingStyle.fill,
+    );
+
+    final Paint arrowPaint = Paint()
+      ..color = Colors.black
+      ..style = PaintingStyle.fill;
+
+    final Path arrowPath = Path();
+    final double arrowSize = thumbRadius * 0.6; 
+
+    arrowPath.moveTo(center.dx, center.dy - arrowSize); 
+    arrowPath.lineTo(center.dx - arrowSize/2, center.dy + arrowSize/3); 
+    arrowPath.lineTo(center.dx + arrowSize/2, center.dy + arrowSize/3); 
+    arrowPath.close();
+
+    context.canvas.drawPath(arrowPath, arrowPaint);
   }
 }
