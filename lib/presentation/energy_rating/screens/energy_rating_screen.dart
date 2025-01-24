@@ -2,6 +2,7 @@ import 'package:bia_app/assets/configs/assets/app_vectors.dart';
 import 'package:bia_app/assets/configs/theme/app_colors.dart';
 import 'package:bia_app/common/cancel_button.dart';
 import 'package:bia_app/common/continue_button.dart';
+import 'package:bia_app/presentation/energy_rating/widgets/custom_slider.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/svg.dart';
 
@@ -13,6 +14,8 @@ class EnergyRatingScreen extends StatefulWidget {
 }
 
 class _EnergyRatingScreenState extends State<EnergyRatingScreen> {
+  double _sliderValue = 4.0;  // Initialize with middle value
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -32,9 +35,9 @@ class _EnergyRatingScreenState extends State<EnergyRatingScreen> {
               child: Stack(
                 alignment: Alignment.center,
                 children: [
-              Container(
+                  Container(
                     color: AppColors.brown.withOpacity(0.8),
-                    ),
+                  ),
                   Container(
                     width: double.infinity,
                     child: Column(
@@ -81,14 +84,16 @@ class _EnergyRatingScreenState extends State<EnergyRatingScreen> {
                         ),
                         const SizedBox(height: 24),
                         Padding(
-                          padding: EdgeInsets.symmetric(horizontal: 24),
+                          padding: const EdgeInsets.symmetric(horizontal: 24),
                           child: Column(
                             children: [
-                              Slider(
-                                value: 0.5,
-                                onChanged: (value) {},
-                                activeColor: AppColors.primary,
-                                inactiveColor: Colors.white,
+                                CustomSlider(
+                                value: _sliderValue,
+                                onChanged: (value) {
+                                  setState(() {
+                                    _sliderValue = value;
+                                  });
+                                },
                               ),
                               const Row(
                                 mainAxisAlignment:
