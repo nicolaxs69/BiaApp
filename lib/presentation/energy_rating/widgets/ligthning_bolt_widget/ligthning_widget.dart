@@ -38,7 +38,7 @@ class _LightningBoltWidgetState extends State<LightningBoltWidget>
           child: CustomPaint(
             size: Size(
               180,
-              (150 * 1.1914893617021276).toDouble(),
+              (180 * 1.1914893617021276).toDouble(),
             ),
             painter: LigthningCustomPainter(
               animationValue: _animationController.value,

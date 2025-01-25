@@ -187,38 +187,53 @@ class LigthningCustomPainter extends CustomPainter {
         size.height * 0.3982911);
     path_1.close();
 
+    // Draw the lightning bolt outline with lower opacity
     Paint paint_0_fill = Paint()..style = PaintingStyle.fill;
     paint_0_fill.color = Color(0xffFFAA5B).withOpacity(0.2);
     canvas.drawPath(path_0, paint_0_fill);
 
+    // Set up the clipping path for the wave animation
     Paint paint_1_fill = Paint()..style = PaintingStyle.fill;
     paint_1_fill.color = Color(0xffFFAA5B).withOpacity(1.0);
-
     canvas.clipPath(path_1);
 
+    // Configure the wave paint style
     Paint wavePaint = Paint()
       ..color = Color(0xFFFFAA5B)
       ..style = PaintingStyle.fill;
 
     Path wavePath = Path();
+    // Controls the wave height amplitude
     double heightParameter = size.height * 0.01;
+    // Controls how many waves appear (lower = fewer waves)
     double periodParameter = 0.015;
+    // Controls the speed of the wave animation
     double waveSpeed = 2.0;
 
+    // Calculate the wave's vertical position based on fill value
     double filledHeight = size.height * fillValue;
     double waveBaseY = size.height - filledHeight;
 
-    // Wave animation, wave moves from right to left.
-    // The wave is being drawn inside the lightning bolt shape from right to left.
-    // This animation was achieved based on this post --> https://velog.io/@edge/Flutter-Wave-Animation-%EA%B5%AC%ED%98%84
+    /* Wave animation, wave moves from right to left.
+
+       This animation was achieved based on this post:
+       https://velog.io/@edge/Flutter-Wave-Animation-%EA%B5%AC%ED%98%84
+    
+       The wave is created by plotting points along a sine curve
+       and connecting them with lines. The wave moves by offsetting
+       the sine function based on the animation value. */
     for (double i = 0; i <= size.width; i++) {
       double yOffset = heightParameter *
           sin(periodParameter * i - animationValue * waveSpeed * pi);
+      
+      // Draw wave points
       wavePath.lineTo(i, waveBaseY + heightParameter + yOffset);
       if (i == 0) {
         wavePath.moveTo(0, waveBaseY + heightParameter + yOffset);
       }
     }
+
+    // Complete the wave path by closing the bottom
     wavePath.lineTo(size.width, size.height);
     wavePath.lineTo(0, size.height);
     wavePath.close();
@@ -228,6 +243,7 @@ class LigthningCustomPainter extends CustomPainter {
 
   @override
   bool shouldRepaint(covariant LigthningCustomPainter oldDelegate) {
+    // Repaint when animation controller value changes
     return oldDelegate.animationValue != animationValue;
   }
 }
