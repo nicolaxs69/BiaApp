@@ -201,7 +201,7 @@ class LigthningCustomPainter extends CustomPainter {
       ..style = PaintingStyle.fill;
 
     Path wavePath = Path();
-    double heightParameter = size.height * 0.2375;
+    double heightParameter = size.height * 0.01;
     double periodParameter = 0.015;
     double waveSpeed = 2.0;
 
@@ -220,7 +220,7 @@ class LigthningCustomPainter extends CustomPainter {
       }
     }
     wavePath.lineTo(size.width, size.height);
-    wavePath.lineTo(3, size.height);
+    wavePath.lineTo(0, size.height);
     wavePath.close();
 
     canvas.drawPath(wavePath, wavePaint);
