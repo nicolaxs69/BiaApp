@@ -4,6 +4,8 @@ import 'package:bia_app/common/continue_button.dart';
 import 'package:bia_app/presentation/energy_rating/widgets/custom_slider.dart';
 import 'package:bia_app/presentation/energy_rating/widgets/ligthning_bolt_widget/ligthning_widget.dart';
 import 'package:flutter/material.dart';
+import 'package:bia_app/assets/configs/constants/app_strings.dart';
+import 'package:bia_app/presentation/energy_rating/utils/energy_rating_utils.dart';
 
 class EnergyRatingScreen extends StatefulWidget {
   const EnergyRatingScreen({super.key});
@@ -13,7 +15,34 @@ class EnergyRatingScreen extends StatefulWidget {
 }
 
 class _EnergyRatingScreenState extends State<EnergyRatingScreen> {
-  double _sliderValue = 4.0; // Initialize with middle value
+
+  static const double _initialSliderValue = EnergyRatingUtils.minValue;
+  static const double _contentPadding = 24.0;
+  static const double _sliderHorizontalPadding = 30.0;
+  static const double _borderRadius = 30.0;
+
+  double _sliderValue = _initialSliderValue;
+
+  String _getEnergyLevelText(double value) {
+    switch (value.toInt()) {
+      case 1:
+        return AppStrings.energyStatusExhausted;
+      case 2:
+        return AppStrings.energyStatusTired;
+      case 3:
+        return AppStrings.energyStatusSlightlyTired;
+      case 4:
+        return AppStrings.energyStatusNeutral;
+      case 5:
+        return AppStrings.energyStatusSlightlyEnergized;
+      case 6:
+        return AppStrings.energyStatusEnergized;
+      case 7:
+        return AppStrings.energyStatusVeryEnergized;
+      default:
+        return '';
+    }
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -23,29 +52,38 @@ class _EnergyRatingScreenState extends State<EnergyRatingScreen> {
         backgroundColor: Colors.transparent,
         elevation: 0,
         leading: BackButton(
-          onPressed: () {},
+          onPressed: () => Navigator.of(context).pop(),
         ),
       ),
       body: Column(
         children: [
-          Expanded(
-            child: _mainContent(),
-          ),
-          buttonsContent()
+          Expanded(child: _mainContent()),
+          _buttonsContent(),
         ],
       ),
     );
   }
 
-  Widget buttonsContent() {
+  Widget _buttonsContent() {
     return Container(
       color: AppColors.layoutBackground,
-      padding: const EdgeInsets.fromLTRB(24, 12, 24, 28),
+      padding: const EdgeInsets.fromLTRB(
+        _contentPadding,
+        _contentPadding / 2,
+        _contentPadding,
+        _contentPadding + 4,
+      ),
       child: Row(
         mainAxisAlignment: MainAxisAlignment.spaceBetween,
         children: [
-          CancelButton(title: 'Cancel', onPressed: () {}),
-          ContinueButton(title: 'Continue', onPressed: () {}),
+          CancelButton(
+            title: AppStrings.buttonCancel,
+            onPressed: () => Navigator.of(context).pop(),
+          ),
+          ContinueButton(
+            title: AppStrings.buttonContinue,
+            onPressed: (){},
+          ),
         ],
       ),
     );
@@ -56,7 +94,7 @@ class _EnergyRatingScreenState extends State<EnergyRatingScreen> {
       decoration: BoxDecoration(
         color: AppColors.brown.withOpacity(0.3),
         borderRadius: const BorderRadius.all(
-          Radius.circular(30),
+          Radius.circular(_borderRadius),
         ),
       ),
       child: Stack(
@@ -72,7 +110,7 @@ class _EnergyRatingScreenState extends State<EnergyRatingScreen> {
                 const SizedBox(height: 76),
                 _energyLevelIcon(),
                 const SizedBox(height: 84),
-                _energyStatusDescriptionTect(),
+                _energyStatusDescriptionText(),
                 const SizedBox(height: 24),
                 _energyRatingSlider(),
               ],
@@ -83,11 +121,11 @@ class _EnergyRatingScreenState extends State<EnergyRatingScreen> {
     );
   }
 
-  Widget _energyStatusDescriptionTect() {
-    return const Center(
+  Widget _energyStatusDescriptionText() {
+    return Center(
       child: Text(
-        "I'm feeling great!",
-        style: TextStyle(
+        _getEnergyLevelText(_sliderValue),
+        style: const TextStyle(
           fontFamily: 'ppneuemontreal',
           fontWeight: FontWeight.w500,
           color: Colors.white,
@@ -103,7 +141,7 @@ class _EnergyRatingScreenState extends State<EnergyRatingScreen> {
     return Padding(
       padding: const EdgeInsets.symmetric(horizontal: 36),
       child: Text(
-        'How would you rate your energy this morning?',
+        AppStrings.energyRatingQuestion,
         textAlign: TextAlign.center,
         style: TextStyle(
           fontFamily: 'ppneuemontreal',
@@ -120,49 +158,43 @@ class _EnergyRatingScreenState extends State<EnergyRatingScreen> {
   Widget _energyLevelIcon() {
     return Center(
       child: LightningBoltWidget(
-        fillValue: 0.5,
+        fillValue: EnergyRatingUtils.sliderValueToFillPercentage(_sliderValue),
       ),
     );
   }
 
   Widget _energyRatingSlider() {
     return Padding(
-      padding: const EdgeInsets.symmetric(horizontal: 24),
+      padding: const EdgeInsets.symmetric(horizontal: _sliderHorizontalPadding),
       child: Column(
         children: [
           CustomSlider(
+            min: EnergyRatingUtils.minValue,
+            max: EnergyRatingUtils.maxValue,
+            divisions: EnergyRatingUtils.totalLevels - 1,
             value: _sliderValue,
-            onChanged: (value) {
-              setState(() {
-                _sliderValue = value;
-              });
-            },
+            onChanged: (value) => setState(() => _sliderValue = value),
           ),
-          Row(
-            mainAxisAlignment: MainAxisAlignment.spaceBetween,
-            children: [
-              Text(
-                'Worst',
-                style: TextStyle(
-                  color: Colors.white.withOpacity(0.5),
-                  fontSize: 12,
-                  fontFamily: 'ppneuemontreal',
-                  fontWeight: FontWeight.w500,
-                ),
-              ),
-              Text(
-                'Best',
-                style: TextStyle(
-                  color: Colors.white.withOpacity(0.5),
-                  fontSize: 12,
-                  fontFamily: 'ppneuemontreal',
-                  fontWeight: FontWeight.w500,
-                ),
-              ),
-            ],
-          ),
+          _buildSliderLabels(),
         ],
       ),
+    );
+  }
+
+  Widget _buildSliderLabels() {
+    final labelStyle = TextStyle(
+      color: Colors.white.withOpacity(0.5),
+      fontSize: 12,
+      fontFamily: 'ppneuemontreal',
+      fontWeight: FontWeight.w500,
+    );
+
+    return Row(
+      mainAxisAlignment: MainAxisAlignment.spaceBetween,
+      children: [
+        Text(AppStrings.energyLevelWorst, style: labelStyle),
+        Text(AppStrings.energyLevelBest, style: labelStyle),
+      ],
     );
   }
 
