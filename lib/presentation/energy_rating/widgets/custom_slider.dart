@@ -1,6 +1,15 @@
 import 'package:bia_app/assets/configs/theme/app_colors.dart';
 import 'package:flutter/material.dart';
 
+/* Custom slider widget that provides a customized appearance and behavior.
+ * 
+ * This slider includes custom track, thumb, and tick mark shapes. It's designed
+ * with a specific visual style including:
+ * - Custom track height and appearance
+ * - Custom thumb shape with directional arrows
+ * - Custom tick marks for divisions
+ * - Customized colors and dimensions
+ */
 class CustomSlider extends StatelessWidget {
   final double value;
   final ValueChanged<double> onChanged;
@@ -40,7 +49,15 @@ class CustomSlider extends StatelessWidget {
   }
 }
 
-// Custom tick to modify the tick mark size and color
+/* Custom shape for slider tick marks.
+ * 
+ * Provides circular tick marks with customizable radius and padding.
+ * 
+ * Parameters:
+ * - [tickRadius]: The radius of each tick mark
+ * - [horizontalPadding]: Horizontal padding between tick marks
+ * - [endPadding]: Padding at the ends of the slider
+ */
 class CustomTickMarkShape extends RoundSliderTickMarkShape {
   final double tickRadius;
   final double horizontalPadding;
@@ -86,7 +103,14 @@ class CustomTickMarkShape extends RoundSliderTickMarkShape {
   }
 }
 
-// Custom track shape to extend the track to the edge of the screen
+/* Custom track shape for the slider.
+ * 
+ * Extends the default rounded rectangle track shape with customizable extensions
+ * and improvements to edge-to-edge rendering.
+ * 
+ * Parameters:
+ * - [trackExtension]: Additional extension length for the track at both ends
+ */
 class CustomTrackShape extends RoundedRectSliderTrackShape {
   final double trackExtension;
 
@@ -151,12 +175,26 @@ class CustomTrackShape extends RoundedRectSliderTrackShape {
   }
 }
 
+/* Custom thumb shape for the slider with directional arrows.
+ * 
+ * 
+ * Parameters:
+ * - [activeColor]: The color of the thumb when active
+ * - [thumbRadius]: The radius of the circular thumb
+ * - [active]: Whether the thumb is in an active state
+ * 
+ * The thumb includes:
+ * - A circular background with the specified active color
+ * - Two directional arrows (< >) drawn in grey
+ * - Customizable dimensions for the arrows and spacing
+ */
 class CustomThumbShape extends SliderComponentShape {
   final Color activeColor;
   final bool active;
   final double thumbRadius;
 
-  const CustomThumbShape(this.activeColor, {required this.thumbRadius, required this.active});
+  const CustomThumbShape(this.activeColor,
+      {required this.thumbRadius, required this.active});
 
   @override
   Size getPreferredSize(bool isEnabled, bool isDiscrete) {
@@ -178,7 +216,6 @@ class CustomThumbShape extends SliderComponentShape {
     required double textScaleFactor,
     required Size sizeWithOverflow,
   }) {
-    
     context.canvas.drawCircle(
       center,
       thumbRadius,
