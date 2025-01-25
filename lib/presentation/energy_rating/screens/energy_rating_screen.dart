@@ -84,10 +84,10 @@ class _EnergyRatingScreenState extends State<EnergyRatingScreen> {
   }
 
   Widget _energyStatusDescriptionTect() {
-    return const Center(
+    return Center(
       child: Text(
-        "I'm feeling great!",
-        style: TextStyle(
+        _getEnergyLevelText(_sliderValue), // Updated
+        style: const TextStyle(
           fontFamily: 'ppneuemontreal',
           fontWeight: FontWeight.w500,
           color: Colors.white,
@@ -120,7 +120,7 @@ class _EnergyRatingScreenState extends State<EnergyRatingScreen> {
   Widget _energyLevelIcon() {
     return Center(
       child: LightningBoltWidget(
-        fillValue: 0.5,
+        fillValue: (_sliderValue - 1) / 6 * 1.1, // Map 1-7 range to 0.0-1.1 range
       ),
     );
   }
@@ -181,5 +181,26 @@ class _EnergyRatingScreenState extends State<EnergyRatingScreen> {
         ),
       ),
     );
+  }
+}
+
+String _getEnergyLevelText(double value) {
+  switch (value.toInt()) {
+    case 1:
+      return 'Exhausted';
+    case 2:
+      return 'Tired';
+    case 3:
+      return 'Slightly Tired';
+    case 4:
+      return 'Neutral';
+    case 5:
+      return 'Slightly Energized';
+    case 6:
+      return 'Energized';
+    case 7:
+      return 'Very Energized';
+    default:
+      return '';
   }
 }
