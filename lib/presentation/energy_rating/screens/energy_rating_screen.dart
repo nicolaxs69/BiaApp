@@ -4,6 +4,7 @@ import 'package:bia_app/common/continue_button.dart';
 import 'package:bia_app/presentation/energy_rating/widgets/custom_slider.dart';
 import 'package:bia_app/presentation/energy_rating/widgets/ligthning_bolt_widget/ligthning_widget.dart';
 import 'package:flutter/material.dart';
+import 'package:bia_app/assets/configs/constants/app_strings.dart';
 
 class EnergyRatingScreen extends StatefulWidget {
   const EnergyRatingScreen({super.key});
@@ -14,6 +15,7 @@ class EnergyRatingScreen extends StatefulWidget {
 
 class _EnergyRatingScreenState extends State<EnergyRatingScreen> {
   double _sliderValue = 4.0; // Initialize with middle value
+  double divisionOffsetFactor = 6 * 1.1;
 
   @override
   Widget build(BuildContext context) {
@@ -44,8 +46,8 @@ class _EnergyRatingScreenState extends State<EnergyRatingScreen> {
       child: Row(
         mainAxisAlignment: MainAxisAlignment.spaceBetween,
         children: [
-          CancelButton(title: 'Cancel', onPressed: () {}),
-          ContinueButton(title: 'Continue', onPressed: () {}),
+          CancelButton(title: AppStrings.buttonCancel, onPressed: () {}),
+          ContinueButton(title: AppStrings.buttonContinue, onPressed: () {}),
         ],
       ),
     );
@@ -103,7 +105,7 @@ class _EnergyRatingScreenState extends State<EnergyRatingScreen> {
     return Padding(
       padding: const EdgeInsets.symmetric(horizontal: 36),
       child: Text(
-        'How would you rate your energy this morning?',
+        AppStrings.energyRatingQuestion,
         textAlign: TextAlign.center,
         style: TextStyle(
           fontFamily: 'ppneuemontreal',
@@ -120,7 +122,7 @@ class _EnergyRatingScreenState extends State<EnergyRatingScreen> {
   Widget _energyLevelIcon() {
     return Center(
       child: LightningBoltWidget(
-        fillValue: (_sliderValue - 1) / 6 * 1.1, // Map 1-7 range to 0.0-1.1 range
+        fillValue: (_sliderValue - 1) / divisionOffsetFactor,
       ),
     );
   }
@@ -142,7 +144,7 @@ class _EnergyRatingScreenState extends State<EnergyRatingScreen> {
             mainAxisAlignment: MainAxisAlignment.spaceBetween,
             children: [
               Text(
-                'Worst',
+                AppStrings.energyLevelWorst,
                 style: TextStyle(
                   color: Colors.white.withOpacity(0.5),
                   fontSize: 12,
@@ -151,7 +153,7 @@ class _EnergyRatingScreenState extends State<EnergyRatingScreen> {
                 ),
               ),
               Text(
-                'Best',
+                AppStrings.energyLevelBest,
                 style: TextStyle(
                   color: Colors.white.withOpacity(0.5),
                   fontSize: 12,
@@ -187,19 +189,19 @@ class _EnergyRatingScreenState extends State<EnergyRatingScreen> {
 String _getEnergyLevelText(double value) {
   switch (value.toInt()) {
     case 1:
-      return 'Exhausted';
+      return AppStrings.energyStatusExhausted;
     case 2:
-      return 'Tired';
+      return AppStrings.energyStatusTired;
     case 3:
-      return 'Slightly Tired';
+      return AppStrings.energyStatusSlightlyTired;
     case 4:
-      return 'Neutral';
+      return AppStrings.energyStatusNeutral;
     case 5:
-      return 'Slightly Energized';
+      return AppStrings.energyStatusSlightlyEnergized;
     case 6:
-      return 'Energized';
+      return AppStrings.energyStatusEnergized;
     case 7:
-      return 'Very Energized';
+      return AppStrings.energyStatusVeryEnergized;
     default:
       return '';
   }
