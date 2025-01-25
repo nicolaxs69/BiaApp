@@ -3,6 +3,7 @@ import 'package:bia_app/common/cancel_button.dart';
 import 'package:bia_app/common/continue_button.dart';
 import 'package:bia_app/presentation/energy_rating/widgets/custom_slider.dart';
 import 'package:bia_app/presentation/energy_rating/widgets/ligthning_bolt_widget/ligthning_custom_painter.dart';
+import 'package:bia_app/presentation/energy_rating/widgets/ligthning_bolt_widget/ligthning_widget.dart';
 import 'package:flutter/material.dart';
 
 class EnergyRatingScreen extends StatefulWidget {
@@ -119,12 +120,8 @@ class _EnergyRatingScreenState extends State<EnergyRatingScreen> {
 
   Widget _energyLevelIcon() {
     return Center(
-      child: CustomPaint(
-        size: Size(
-          180,
-          (180 * 1.1914893617021276).toDouble(),
-        ),
-        painter: LigthningCustomPainter(),
+      child: LightningBoltWidget(
+        fillValue: 0.5,
       ),
     );
   }
