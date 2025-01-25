@@ -178,7 +178,7 @@ class CustomThumbShape extends SliderComponentShape {
     required double textScaleFactor,
     required Size sizeWithOverflow,
   }) {
- 
+    
     context.canvas.drawCircle(
       center,
       thumbRadius,
@@ -187,18 +187,31 @@ class CustomThumbShape extends SliderComponentShape {
         ..style = PaintingStyle.fill,
     );
 
-    final Paint arrowPaint = Paint()
-      ..color = Colors.black
-      ..style = PaintingStyle.fill;
+    const double size = 4.0;
+    const double spacing = 6.0;
+    const double angle = 2.5;
 
-    final Path arrowPath = Path();
-    final double arrowSize = thumbRadius * 0.6; 
+    final pathPaint = Paint()
+      ..color = AppColors.grey
+      ..style = PaintingStyle.stroke
+      ..strokeWidth = 2.5
+      ..strokeCap = StrokeCap.round;
 
-    arrowPath.moveTo(center.dx, center.dy - arrowSize); 
-    arrowPath.lineTo(center.dx - arrowSize/2, center.dy + arrowSize/3); 
-    arrowPath.lineTo(center.dx + arrowSize/2, center.dy + arrowSize/3); 
-    arrowPath.close();
+    // Left arrow
+    final leftPath = Path()
+      ..moveTo(center.dx - size - spacing / 2, center.dy)
+      ..lineTo(center.dx - spacing / 2, center.dy - size / 2 - angle)
+      ..moveTo(center.dx - size - spacing / 2, center.dy)
+      ..lineTo(center.dx - spacing / 2, center.dy + size / 2 + angle);
 
-    context.canvas.drawPath(arrowPath, arrowPaint);
+    // Right arrow
+    final rightPath = Path()
+      ..moveTo(center.dx + size + spacing / 2, center.dy)
+      ..lineTo(center.dx + spacing / 2, center.dy - size / 2 - angle)
+      ..moveTo(center.dx + size + spacing / 2, center.dy)
+      ..lineTo(center.dx + spacing / 2, center.dy + size / 2 + angle);
+
+    context.canvas.drawPath(leftPath, pathPaint);
+    context.canvas.drawPath(rightPath, pathPaint);
   }
 }
