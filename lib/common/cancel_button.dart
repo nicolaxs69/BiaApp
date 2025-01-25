@@ -1,3 +1,4 @@
+import 'package:bia_app/assets/configs/theme/app_colors.dart';
 import 'package:flutter/material.dart';
 
 class CancelButton extends StatelessWidget {
@@ -22,7 +23,7 @@ class CancelButton extends StatelessWidget {
         style: const TextStyle(
           fontFamily: 'ppneuemontreal',
           fontWeight: FontWeight.w600,
-          color: Colors.grey,
+          color: AppColors.grey,
           fontSize: 16,
           height: 24 / 16,
           letterSpacing: 16 * 0.03,

@@ -30,29 +30,45 @@ class _EnergyRatingScreenState extends State<EnergyRatingScreen> {
       body: Column(
         children: [
           Expanded(
-            child: ClipRRect(
-              borderRadius: BorderRadius.circular(40),
+            child: Container(
+              decoration: BoxDecoration(
+                color: AppColors.brown.withOpacity(0.3),
+                borderRadius: const BorderRadius.all(
+                  Radius.circular(30),
+                ),
+              ),
               child: Stack(
                 alignment: Alignment.center,
                 children: [
                   Container(
-                    color: AppColors.brown.withOpacity(0.8),
+                    decoration: BoxDecoration(
+                      gradient: RadialGradient(
+                        radius: 0.9,
+                        colors: [
+                          AppColors.primary.withOpacity(0.3),
+                          AppColors.primary.withOpacity(0.2),
+                          AppColors.primary.withOpacity(0.1),
+                          Colors.transparent,
+                        ],
+                        stops: const [0.0, 0.40, 0.60, 1],
+                      ),
+                    ),
                   ),
                   Container(
                     width: double.infinity,
                     child: Column(
                       children: [
                         const SizedBox(height: 48),
-                        const Center(
+                        Center(
                           child: Padding(
-                            padding: EdgeInsets.symmetric(horizontal: 36),
+                            padding: const EdgeInsets.symmetric(horizontal: 36),
                             child: Text(
                               'How would you rate your energy this morning?',
                               textAlign: TextAlign.center,
                               style: TextStyle(
                                 fontFamily: 'ppneuemontreal',
                                 fontWeight: FontWeight.bold,
-                                color: Colors.white,
+                                color: Colors.white.withOpacity(0.8),
                                 fontSize: 24,
                                 height: 32 / 24,
                                 letterSpacing: 24 * 0.03,
@@ -95,15 +111,15 @@ class _EnergyRatingScreenState extends State<EnergyRatingScreen> {
                                   });
                                 },
                               ),
-                              const Row(
+                              Row(
                                 mainAxisAlignment:
                                     MainAxisAlignment.spaceBetween,
                                 children: [
                                   Text(
                                     'Worst',
                                     style: TextStyle(
-                                      color: Colors.white,
-                                      fontSize: 14,
+                                      color: Colors.white.withOpacity(0.5),
+                                      fontSize: 12,
                                       fontFamily: 'ppneuemontreal',
                                       fontWeight: FontWeight.w500,
                                     ),
@@ -111,8 +127,8 @@ class _EnergyRatingScreenState extends State<EnergyRatingScreen> {
                                   Text(
                                     'Best',
                                     style: TextStyle(
-                                      color: Colors.white,
-                                      fontSize: 14,
+                                      color: Colors.white.withOpacity(0.5),
+                                      fontSize: 12,
                                       fontFamily: 'ppneuemontreal',
                                       fontWeight: FontWeight.w500,
                                     ),
