@@ -11,9 +11,9 @@ class AppStrings {
   // Energy status levels
   static const String energyStatusExhausted = 'Exhausted';
   static const String energyStatusTired = 'Tired';
-  static const String energyStatusSlightlyTired = 'Slightly Tired';
+  static const String energyStatusSlightlyTired = 'Slightly tired';
   static const String energyStatusNeutral = 'Neutral';
-  static const String energyStatusSlightlyEnergized = 'Slightly Energized';
+  static const String energyStatusSlightlyEnergized = 'Slightly energized';
   static const String energyStatusEnergized = 'Energized';
-  static const String energyStatusVeryEnergized = 'Very Energized';
+  static const String energyStatusVeryEnergized = 'Very energized';
 }

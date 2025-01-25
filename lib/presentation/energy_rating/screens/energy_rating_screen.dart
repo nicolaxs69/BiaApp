@@ -5,7 +5,7 @@ import 'package:bia_app/presentation/energy_rating/widgets/custom_slider.dart';
 import 'package:bia_app/presentation/energy_rating/widgets/ligthning_bolt_widget/ligthning_widget.dart';
 import 'package:flutter/material.dart';
 import 'package:bia_app/assets/configs/constants/app_strings.dart';
-
+import 'package:bia_app/presentation/energy_rating/utils/energy_rating_utils.dart';
 
 class EnergyRatingScreen extends StatefulWidget {
   const EnergyRatingScreen({super.key});
@@ -16,8 +16,7 @@ class EnergyRatingScreen extends StatefulWidget {
 
 class _EnergyRatingScreenState extends State<EnergyRatingScreen> {
 
-  static const double _initialSliderValue = 4.0;
-  static const double _divisionOffsetFactor = 6 * 1.1;
+  static const double _initialSliderValue = EnergyRatingUtils.minValue;
   static const double _contentPadding = 24.0;
   static const double _sliderHorizontalPadding = 30.0;
   static const double _borderRadius = 30.0;
@@ -159,7 +158,7 @@ class _EnergyRatingScreenState extends State<EnergyRatingScreen> {
   Widget _energyLevelIcon() {
     return Center(
       child: LightningBoltWidget(
-        fillValue: (_sliderValue - 1) / _divisionOffsetFactor,
+        fillValue: EnergyRatingUtils.sliderValueToFillPercentage(_sliderValue),
       ),
     );
   }
@@ -170,6 +169,9 @@ class _EnergyRatingScreenState extends State<EnergyRatingScreen> {
       child: Column(
         children: [
           CustomSlider(
+            min: EnergyRatingUtils.minValue,
+            max: EnergyRatingUtils.maxValue,
+            divisions: EnergyRatingUtils.totalLevels - 1,
             value: _sliderValue,
             onChanged: (value) => setState(() => _sliderValue = value),
           ),

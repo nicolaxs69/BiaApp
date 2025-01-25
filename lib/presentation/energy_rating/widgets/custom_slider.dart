@@ -11,39 +11,51 @@ import 'package:flutter/material.dart';
  * - Customized colors and dimensions
  */
 class CustomSlider extends StatelessWidget {
+  final double min;
+  final double max;
+  final int divisions;
   final double value;
   final ValueChanged<double> onChanged;
 
-  const CustomSlider({super.key, required this.value, required this.onChanged});
+  const CustomSlider({
+    super.key,
+    this.min = 1.0,
+    this.max = 7.0,
+    this.divisions = 6,
+    required this.value,
+    required this.onChanged,
+  });
 
   @override
   Widget build(BuildContext context) {
+    debugPrint("Slider value: $value"); // More reliable for Flutter debugging
     return SliderTheme(
       data: SliderThemeData(
-        trackHeight: 22,
-        trackShape: CustomTrackShape(),
-        thumbShape: const CustomThumbShape(
-          Colors.white,
-          thumbRadius: 22,
-          active: false,
-        ),
-        overlayShape: const RoundSliderOverlayShape(overlayRadius: 30),
-        tickMarkShape: const CustomTickMarkShape(
-          tickRadius: 2.0,
-          horizontalPadding: 0,
-          endPadding: 0,
-        ),
-        activeTickMarkColor: Colors.white.withOpacity(0.5),
-        inactiveTickMarkColor: Colors.white.withOpacity(1),
-        activeTrackColor: Colors.grey.withOpacity(1.0),
-        inactiveTrackColor: Colors.grey.withOpacity(0.5),
-        overlayColor: Colors.white.withOpacity(0.2),
+      trackHeight: 22,
+      trackShape: CustomTrackShape(),
+      thumbShape: const CustomThumbShape(
+        Colors.white,
+        thumbRadius: 22,
+        active: false,
+      ),
+      overlayShape: const RoundSliderOverlayShape(overlayRadius: 30),
+      tickMarkShape: const CustomTickMarkShape(
+        tickRadius: 2.0,
+        horizontalPadding: 0,
+        endPadding: 0,
+      ),
+      activeTickMarkColor: Colors.white.withOpacity(0.5),
+      inactiveTickMarkColor: Colors.white.withOpacity(1),
+      activeTrackColor: Colors.grey.withOpacity(1.0),
+      inactiveTrackColor: Colors.grey.withOpacity(0.5),
+      overlayColor: Colors.white.withOpacity(0.2),
       ),
       child: Slider(
-        max: 7.0,
-        value: value,
-        divisions: 6,
-        onChanged: onChanged,
+      min: min,
+      max: max,
+      divisions: divisions,
+      value: value,
+      onChanged: onChanged,
       ),
     );
   }
