@@ -1,10 +1,9 @@
-import 'package:bia_app/assets/configs/assets/app_vectors.dart';
 import 'package:bia_app/assets/configs/theme/app_colors.dart';
 import 'package:bia_app/common/cancel_button.dart';
 import 'package:bia_app/common/continue_button.dart';
 import 'package:bia_app/presentation/energy_rating/widgets/custom_slider.dart';
+import 'package:bia_app/presentation/energy_rating/widgets/ligthning_bolt_widget/ligthning_widget.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter_svg/svg.dart';
 
 class EnergyRatingScreen extends StatefulWidget {
   const EnergyRatingScreen({super.key});
@@ -120,10 +119,8 @@ class _EnergyRatingScreenState extends State<EnergyRatingScreen> {
 
   Widget _energyLevelIcon() {
     return Center(
-      child: SvgPicture.asset(
-        AppVectors.energyIcon,
-        width: 188,
-        height: 224,
+      child: LightningBoltWidget(
+        fillValue: 0.5,
       ),
     );
   }
