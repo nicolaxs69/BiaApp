@@ -52,7 +52,7 @@ class _EnergyRatingScreenState extends State<EnergyRatingScreen> {
         backgroundColor: Colors.transparent,
         elevation: 0,
         leading: BackButton(
-          onPressed: () => Navigator.of(context).pop(),
+          onPressed: () => {},
         ),
       ),
       body: Column(
@@ -78,7 +78,7 @@ class _EnergyRatingScreenState extends State<EnergyRatingScreen> {
         children: [
           CancelButton(
             title: AppStrings.buttonCancel,
-            onPressed: () => Navigator.of(context).pop(),
+            onPressed: (){},
           ),
           ContinueButton(
             title: AppStrings.buttonContinue,

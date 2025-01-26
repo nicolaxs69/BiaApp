@@ -1,9 +1,16 @@
 import 'package:bia_app/presentation/energy_rating/screens/energy_rating_screen.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
 import 'assets/configs/theme/app_theme.dart';
 
 void main() {
-  runApp(MyApp());
+  WidgetsFlutterBinding.ensureInitialized();
+  SystemChrome.setPreferredOrientations([
+    DeviceOrientation.portraitUp,
+    DeviceOrientation.portraitDown,
+  ]).then((_) {
+    runApp(MyApp());
+  });
 }
 
 class MyApp extends StatelessWidget {
