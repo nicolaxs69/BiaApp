@@ -5,7 +5,6 @@ import 'assets/configs/theme/app_theme.dart';
 void main() {
   runApp(MyApp());
 }
-
 class MyApp extends StatelessWidget {
   final key = GlobalKey();
   MyApp({super.key});
